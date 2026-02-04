@@ -1,0 +1,203 @@
+:root {
+  --link: #0000ee;
+  --visited: #551a8b;
+  --border: #cfcfcf;
+  --muted: #666666;
+  --bg: #ffffff;
+  --highlight: #f7f7f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--visited);
+}
+
+main,
+.site-header,
+.site-footer {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-title {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.site-title a {
+  text-decoration: none;
+  color: #000000;
+}
+
+.site-nav a {
+  margin-right: 12px;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: normal;
+  margin: 0 0 12px;
+}
+
+section {
+  margin-bottom: 24px;
+}
+
+.listing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listing-row {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.listing-row:last-child {
+  border-bottom: none;
+}
+
+.listing-link {
+  margin-right: 8px;
+}
+
+.listing-meta {
+  margin-right: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.listing-featured {
+  margin-right: 8px;
+  color: #b00020;
+  font-size: 12px;
+}
+
+.banner {
+  background: var(--highlight);
+  border: 1px solid var(--border);
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.form-row {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+textarea {
+  min-height: 140px;
+}
+
+button,
+input[type="submit"] {
+  padding: 6px 12px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+  background: #f0f0f0;
+  cursor: pointer;
+}
+
+.honeypot {
+  display: none;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.small {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.inline-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.listing-description {
+  white-space: pre-wrap;
+  border: 1px solid var(--border);
+  padding: 12px;
+  background: #fafafa;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--border);
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  background: var(--highlight);
+}
+
+.admin-actions form {
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.pagination {
+  margin-top: 16px;
+}
+
+.pagination a {
+  margin-right: 8px;
+}

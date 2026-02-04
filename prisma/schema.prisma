@@ -1,0 +1,100 @@
+// Prisma schema for Mike's List (SQLite)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ListingStatus {
+  active
+  expired
+  removed
+}
+
+enum ModerationStatus {
+  approved
+  pending
+  rejected
+}
+
+enum LocationType {
+  city
+  remote
+}
+
+enum ReportStatus {
+  open
+  reviewed
+  dismissed
+}
+
+enum ReminderStage {
+  seven_day
+  one_day
+}
+
+model Listing {
+  id                 String           @id @default(cuid())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  expiresAt          DateTime
+  status             ListingStatus    @default(active)
+  moderationStatus   ModerationStatus @default(approved)
+  title              String
+  slug               String
+  category           String
+  categorySlug       String
+  locationType       LocationType
+  city               String?
+  state              String?
+  locationLabel      String
+  locationSlug       String
+  tags               Json
+  priceAmount        Int?
+  priceUnit          String?
+  description        String
+  posterEmail        String
+  manageTokenHash    String           @unique
+  isFeatured         Boolean          @default(false)
+  featuredUntil      DateTime?
+  lastBumpedAt       DateTime         @default(now())
+  lastRenewedAt      DateTime?
+  replyCount         Int              @default(0)
+  lastReminderStage  ReminderStage?
+  lastReminderSentAt DateTime?
+
+  reports            Report[]
+
+  @@index([status, moderationStatus, expiresAt])
+  @@index([categorySlug])
+  @@index([locationSlug])
+  @@index([isFeatured, featuredUntil])
+  @@index([lastBumpedAt])
+  @@index([updatedAt])
+}
+
+model Report {
+  id            String       @id @default(cuid())
+  createdAt     DateTime     @default(now())
+  listingId     String
+  reason        String
+  details       String
+  reporterEmail String?
+  status        ReportStatus @default(open)
+  ipHash        String?
+
+  listing       Listing      @relation(fields: [listingId], references: [id])
+
+  @@index([listingId])
+  @@index([status])
+}
+
+model RateLimit {
+  key         String   @id
+  count       Int
+  windowStart DateTime
+}

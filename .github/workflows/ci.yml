@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+        env:
+          DATABASE_URL: file:./dev.db
+          SITE_URL: http://localhost:3000
+          SMTP_HOST: localhost
+          SMTP_PORT: 1025
+          SMTP_USER: test
+          SMTP_PASS: test
+          SMTP_FROM: test@example.com
+          TOKEN_SALT_SECRET: test-token
+          IP_HASH_SALT_SECRET: test-ip
+          CRON_SECRET: test-cron
+          ADMIN_PASSWORD_HASH: $2a$10$6pLTH1wOa5G4/d7h8mH7oO8lMiC4v65dW0mQx26Q3qY3i.4/tQ/tu
+          MONETIZATION_ENABLED: "false"
