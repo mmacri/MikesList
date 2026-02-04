@@ -17,6 +17,14 @@ This repo deploys `/docs` to GitHub Pages via `.github/workflows/pages.yml`.
 2. Set **Source** to **GitHub Actions**.
 3. Push changes to `main` under `docs/**` or run the workflow manually.
 
+### If You See the README Instead of the Landing Page
+
+That means Pages is still set to **Deploy from a branch** (usually the repository root). Switch to **GitHub Actions**, or set the branch source to `/docs`. The landing page URL should look like:
+
+```
+https://mmacri.github.io/MikesList/
+```
+
 ### Configure `APP_BASE_URL`
 
 Update the app base URL in `docs/assets/app.js` so all landing-page links point to your live app:
