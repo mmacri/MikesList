@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { getListingById } from "@/lib/listings";
 
 export const dynamic = "force-dynamic";
@@ -18,7 +18,7 @@ export default async function ReportPage({
   params: { id: string; slug: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const listing = await getListingById(params.id);
   if (!listing) {
     notFound();

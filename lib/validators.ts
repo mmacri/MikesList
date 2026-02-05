@@ -3,28 +3,35 @@ import { getAllCategorySlugs, tagSet } from "./config";
 
 const categorySlugSet = new Set(getAllCategorySlugs());
 
-export const listingBaseSchema = z
-  .object({
-    title: z.string().trim().min(3).max(90),
-    categorySlug: z.string().refine((value) => categorySlugSet.has(value), {
-      message: "Invalid category"
+const listingBaseObject = z.object({
+  title: z.string().trim().min(3).max(90),
+  categorySlug: z.string().refine((value) => categorySlugSet.has(value), {
+    message: "Invalid category"
+  }),
+  locationType: z.enum(["city", "remote"]),
+  city: z.string().trim().optional(),
+  state: z.string().trim().optional(),
+  tags: z
+    .array(z.string())
+    .default([])
+    .refine((values) => values.every((value) => tagSet.has(value)), {
+      message: "Invalid tag"
     }),
-    locationType: z.enum(["city", "remote"]),
-    city: z.string().trim().optional(),
-    state: z.string().trim().optional(),
-    tags: z
-      .array(z.string())
-      .default([])
-      .refine((values) => values.every((value) => tagSet.has(value)), {
-        message: "Invalid tag"
-      }),
-    priceAmount: z.number().int().nonnegative().optional().nullable(),
-    priceUnit: z.string().trim().max(20).optional().nullable(),
-    description: z.string().trim().min(10).max(4000)
-  })
-  .superRefine((data, ctx) => {
-    if (data.locationType === "city") {
-      if (!data.city || !data.state) {
+  priceAmount: z.number().int().nonnegative().optional().nullable(),
+  priceUnit: z.string().trim().max(20).optional().nullable(),
+  description: z.string().trim().min(10).max(4000)
+});
+
+const withCityValidation = <T extends z.ZodTypeAny>(schema: T) =>
+  schema.superRefine((data, ctx) => {
+    const payload = data as {
+      locationType?: "city" | "remote";
+      city?: string;
+      state?: string;
+    };
+
+    if (payload.locationType === "city") {
+      if (!payload.city || !payload.state) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "City and state are required for city listings"
@@ -33,9 +40,13 @@ export const listingBaseSchema = z
     }
   });
 
-export const listingCreateSchema = listingBaseSchema.extend({
-  posterEmail: z.string().trim().email()
-});
+export const listingBaseSchema = withCityValidation(listingBaseObject);
+
+export const listingCreateSchema = withCityValidation(
+  listingBaseObject.extend({
+    posterEmail: z.string().trim().email()
+  })
+);
 
 export const listingEditSchema = listingBaseSchema;
 

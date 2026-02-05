@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { categories, slugify, tags as tagOptions } from "@/lib/config";
 import { buildLocation, locationLabelFromSlug, parseLocationSlug } from "@/lib/location";
 import { searchListings } from "@/lib/listings";
@@ -17,7 +17,7 @@ export default async function BrowsePage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const page = Number(searchParams.page || "1") || 1;
   const categorySlug = typeof searchParams.category === "string" ? searchParams.category : undefined;
   const locationTypeParam =

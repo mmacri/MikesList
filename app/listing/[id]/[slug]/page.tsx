@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { getListingById, parseTags } from "@/lib/listings";
 import { formatDate, formatPrice } from "@/lib/format";
 import { getListingUrl } from "@/lib/urls";
@@ -30,7 +30,7 @@ export default async function ListingPage({
 }: {
   params: { id: string; slug: string };
 }) {
-  noStore();
+  unstable_noStore();
   const listing = await getListingById(params.id);
   if (!listing) {
     notFound();

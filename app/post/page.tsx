@@ -1,4 +1,4 @@
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { categories, slugify, tags as tagOptions } from "@/lib/config";
 import { parseLocationSlug } from "@/lib/location";
 
@@ -17,7 +17,7 @@ export default async function PostPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const success = searchParams.success === "1";
   const pending = searchParams.pending === "1";
   const errorKey = typeof searchParams.error === "string" ? searchParams.error : "";

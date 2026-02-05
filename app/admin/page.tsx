@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  noStore();
+  unstable_noStore();
   requireAdmin();
 
   const [activeCount, pendingCount, reportCount] = await Promise.all([

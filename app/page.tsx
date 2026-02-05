@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { categories, siteName, slugify } from "@/lib/config";
 import { getNewestListings } from "@/lib/listings";
 import { ListingList } from "@/app/_components/ListingList";
@@ -7,7 +7,7 @@ import { ListingList } from "@/app/_components/ListingList";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  noStore();
+  unstable_noStore();
   const newest = await getNewestListings(20);
 
   return (

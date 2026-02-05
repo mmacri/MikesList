@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { requireAdmin } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 import { formatDate } from "@/lib/format";
@@ -11,7 +11,7 @@ export default async function AdminListingsPage({
 }: {
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   requireAdmin();
 
   const status = typeof searchParams.status === "string" ? searchParams.status : "";

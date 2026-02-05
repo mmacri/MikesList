@@ -106,7 +106,7 @@ export async function searchListings(filters: {
 
   const rawListings = await prisma.listing.findMany({ where });
 
-  let listings = rawListings.map((listing) => ({
+  let listings: ListingSummary[] = rawListings.map((listing): ListingSummary => ({
     id: listing.id,
     slug: listing.slug,
     title: listing.title,
@@ -114,7 +114,7 @@ export async function searchListings(filters: {
     categorySlug: listing.categorySlug,
     locationLabel: listing.locationLabel,
     locationSlug: listing.locationSlug,
-    locationType: listing.locationType,
+    locationType: listing.locationType === "remote" ? "remote" : "city",
     priceAmount: listing.priceAmount,
     priceUnit: listing.priceUnit,
     updatedAt: listing.updatedAt,

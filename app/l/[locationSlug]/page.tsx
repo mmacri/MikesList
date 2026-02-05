@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { locationLabelFromSlug, parseLocationSlug } from "@/lib/location";
 import { searchListings } from "@/lib/listings";
 import { ListingList } from "@/app/_components/ListingList";
@@ -20,7 +20,7 @@ export default async function LocationPage({
   params: { locationSlug: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const page = Number(searchParams.page || "1") || 1;
   const locationType = params.locationSlug === "remote" ? "remote" : "city";
 

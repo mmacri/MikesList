@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { getListingByToken, parseTags } from "@/lib/listings";
 import { formatDate, formatPrice, maskEmail } from "@/lib/format";
 import { monetizationEnabled } from "@/lib/config";
@@ -25,7 +25,7 @@ export default async function ManagePage({
   params: { token: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const listing = await getListingByToken(params.token);
   const renewed = searchParams.renewed === "1";
   const deleted = searchParams.deleted === "1";

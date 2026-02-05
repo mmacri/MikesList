@@ -1,4 +1,4 @@
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { notFound } from "next/navigation";
 import { getListingByToken, parseTags } from "@/lib/listings";
 import { categories, slugify, tags as tagOptions } from "@/lib/config";
@@ -17,7 +17,7 @@ export default async function ManageEditPage({
   params: { token: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const listing = await getListingByToken(params.token);
   if (!listing) {
     notFound();

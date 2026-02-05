@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { noStore } from "next/cache";
+import { unstable_noStore } from "next/cache";
 import { getCategoryBySlug } from "@/lib/config";
 import { searchListings } from "@/lib/listings";
 import { ListingList } from "@/app/_components/ListingList";
@@ -20,7 +20,7 @@ export default async function CategoryPage({
   params: { categorySlug: string };
   searchParams: Record<string, string | string[] | undefined>;
 }) {
-  noStore();
+  unstable_noStore();
   const category = getCategoryBySlug(params.categorySlug);
   const page = Number(searchParams.page || "1") || 1;
 
