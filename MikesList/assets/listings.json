@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ml-1001",
+    "title": "Fractional CFO for SaaS runway planning",
+    "category": "Accounting & Tax",
+    "categorySlug": "accounting-tax",
+    "locationLabel": "Remote/Online",
+    "locationSlug": "remote",
+    "tags": ["Remote available", "Ongoing", "Hourly"],
+    "updatedLabel": "Feb 4",
+    "description": "Part-time CFO support for runway modeling, cash flow planning, and board-ready reporting. Work async with weekly checkpoints."
+  },
+  {
+    "id": "ml-1002",
+    "title": "Contract review for vendor agreements",
+    "category": "Legal",
+    "categorySlug": "legal",
+    "locationLabel": "Chicago, IL",
+    "locationSlug": "chicago-il",
+    "tags": ["One-time", "Fixed price", "In-person"],
+    "updatedLabel": "Feb 2",
+    "description": "Review vendor MSAs and SOWs, highlight risk areas, and suggest redlines. Flat fee with 48-hour turnaround."
+  },
+  {
+    "id": "ml-1003",
+    "title": "SOC 2 readiness assessment",
+    "category": "IT & Security",
+    "categorySlug": "it-security",
+    "locationLabel": "Austin, TX",
+    "locationSlug": "austin-tx",
+    "tags": ["Fixed price", "Urgent"],
+    "updatedLabel": "Feb 1",
+    "description": "Gap assessment against SOC 2, evidence checklist, and remediation plan. Ideal for teams preparing for their first audit."
+  },
+  {
+    "id": "ml-1004",
+    "title": "Compliance program gap review",
+    "category": "Compliance & Risk",
+    "categorySlug": "compliance-risk",
+    "locationLabel": "Remote/Online",
+    "locationSlug": "remote",
+    "tags": ["Remote available", "One-time"],
+    "updatedLabel": "Feb 3",
+    "description": "Review policies, training, and vendor workflows to identify gaps. Deliver a prioritized remediation plan."
+  },
+  {
+    "id": "ml-1005",
+    "title": "Workplace wellness coaching for teams",
+    "category": "Health & Wellness",
+    "categorySlug": "health-wellness",
+    "locationLabel": "San Diego, CA",
+    "locationSlug": "san-diego-ca",
+    "tags": ["In-person", "Ongoing"],
+    "updatedLabel": "Jan 28",
+    "description": "Weekly on-site sessions focused on stress management, mobility, and sustainable habits. Programs tailored to team size."
+  },
+  {
+    "id": "ml-1006",
+    "title": "Career coaching for senior ICs",
+    "category": "Coaching & Career",
+    "categorySlug": "coaching-career",
+    "locationLabel": "New York, NY",
+    "locationSlug": "new-york-ny",
+    "tags": ["Remote available", "Ongoing", "Hourly"],
+    "updatedLabel": "Feb 1",
+    "description": "Career strategy, interview prep, and promotion narratives for senior individual contributors."
+  },
+  {
+    "id": "ml-1007",
+    "title": "Commercial lease review and advisory",
+    "category": "Real Estate Services",
+    "categorySlug": "real-estate-services",
+    "locationLabel": "San Diego, CA",
+    "locationSlug": "san-diego-ca",
+    "tags": ["Fixed price", "One-time"],
+    "updatedLabel": "Jan 29",
+    "description": "Lease review with risk summary, renewal strategy, and negotiation checklist."
+  },
+  {
+    "id": "ml-1008",
+    "title": "Portfolio valuation review",
+    "category": "Real Estate Services",
+    "categorySlug": "real-estate-services",
+    "locationLabel": "Remote/Online",
+    "locationSlug": "remote",
+    "tags": ["Remote available", "One-time"],
+    "updatedLabel": "Jan 30",
+    "description": "Independent review of valuation assumptions and cap rate sensitivity analysis."
+  },
+  {
+    "id": "ml-1009",
+    "title": "Payroll cleanup and compliance review",
+    "category": "Accounting & Tax",
+    "categorySlug": "accounting-tax",
+    "locationLabel": "Chicago, IL",
+    "locationSlug": "chicago-il",
+    "tags": ["One-time", "Fixed price"],
+    "updatedLabel": "Feb 4",
+    "description": "Reconcile payroll runs, correct misclassifications, and deliver a cleanup checklist for next quarter."
+  },
+  {
+    "id": "ml-1010",
+    "title": "HIPAA policy refresh and training",
+    "category": "Compliance & Risk",
+    "categorySlug": "compliance-risk",
+    "locationLabel": "Austin, TX",
+    "locationSlug": "austin-tx",
+    "tags": ["Fixed price", "Urgent"],
+    "updatedLabel": "Feb 2",
+    "description": "Policy refresh, staff training deck, and a short compliance quiz to document completion."
+  },
+  {
+    "id": "ml-1011",
+    "title": "Executive coaching for new VPs",
+    "category": "Coaching & Career",
+    "categorySlug": "coaching-career",
+    "locationLabel": "Remote/Online",
+    "locationSlug": "remote",
+    "tags": ["Remote available", "Free consult", "Ongoing"],
+    "updatedLabel": "Feb 3",
+    "description": "Leadership transitions, stakeholder management, and weekly accountability sessions with a kickoff consult."
+  },
+  {
+    "id": "ml-1012",
+    "title": "Tenant improvement budgeting support",
+    "category": "Real Estate Services",
+    "categorySlug": "real-estate-services",
+    "locationLabel": "New York, NY",
+    "locationSlug": "new-york-ny",
+    "tags": ["In-person", "Fixed price"],
+    "updatedLabel": "Jan 31",
+    "description": "Budget planning for tenant build-outs, scope review, and cost tracking through project close."
+  }
+]

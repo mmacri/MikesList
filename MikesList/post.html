@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Post - Mike's List</title>
+    <meta name="description" content="Prepare a listing for Mike's List." />
+    <link rel="stylesheet" href="/MikesList/assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="/MikesList/index.html">Home</a>
+        <a href="/MikesList/browse.html">Browse</a>
+        <a href="/MikesList/post.html">Post</a>
+        <a href="/MikesList/rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Post a listing</h1>
+        <p class="small">Use this page to prepare your listing text. The hosted app handles publishing.</p>
+        <p class="inline-actions" id="app-button" hidden>
+          <a id="open-app-link" href="/MikesList/post.html">Open posting form</a>
+        </p>
+      </section>
+
+      <section>
+        <h2>How to post</h2>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <p>Choose a category and location.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <p>Write a clear, specific title.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <p>Add details, tags, and pricing.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <p>Save your manage link after posting.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Prepare your listing</h2>
+        <form id="prepare-form">
+          <div class="form-row">
+            <label for="prep-title">Title</label>
+            <input id="prep-title" name="title" type="text" />
+          </div>
+          <div class="form-row">
+            <label for="prep-category">Category</label>
+            <select id="prep-category" name="category">
+              <option value="">Select a category</option>
+              <option value="Accounting & Tax">Accounting &amp; Tax</option>
+              <option value="Legal">Legal</option>
+              <option value="Compliance & Risk">Compliance &amp; Risk</option>
+              <option value="IT & Security">IT &amp; Security</option>
+              <option value="Real Estate Services">Real Estate Services</option>
+              <option value="Health & Wellness">Health &amp; Wellness</option>
+              <option value="Coaching & Career">Coaching &amp; Career</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="prep-location">Location</label>
+            <input id="prep-location" name="location" type="text" placeholder="Remote/Online or City, ST" />
+          </div>
+          <div class="form-row">
+            <label for="prep-tags">Tags</label>
+            <input id="prep-tags" name="tags" type="text" placeholder="Remote available, Fixed price, Urgent" />
+          </div>
+          <div class="form-row">
+            <label for="prep-description">Description</label>
+            <textarea id="prep-description" name="description"></textarea>
+          </div>
+          <div class="inline-actions">
+            <button type="button" id="generate-listing">Generate listing text</button>
+            <button type="button" id="copy-listing">Copy listing text</button>
+          </div>
+          <div class="prepare-output">
+            <label for="prep-output">Formatted listing</label>
+            <textarea id="prep-output" readonly></textarea>
+          </div>
+        </form>
+      </section>
+
+      <section>
+        <h2>Hosted app</h2>
+        <p>
+          Publishing, email management, and renewals happen in the hosted app. If you run the app yourself,
+          set APP_URL in the site script so the button above links to your posting form.
+        </p>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Posting is free unless featured promotion is enabled by the site owner.</p>
+    </footer>
+    <script src="/MikesList/assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const appButton = document.getElementById("app-button");
+        const appLink = document.getElementById("open-app-link");
+        if (window.MikesList.APP_URL && appButton && appLink) {
+          appLink.href = `${window.MikesList.APP_URL.replace(/\/$/, "")}/post`;
+          appButton.hidden = false;
+        }
+
+        const output = document.getElementById("prep-output");
+        const generate = () => {
+          const title = document.getElementById("prep-title").value.trim();
+          const category = document.getElementById("prep-category").value.trim();
+          const location = document.getElementById("prep-location").value.trim();
+          const tags = document.getElementById("prep-tags").value.trim();
+          const description = document.getElementById("prep-description").value.trim();
+
+          const lines = [];
+          if (title) lines.push(`Title: ${title}`);
+          if (category) lines.push(`Category: ${category}`);
+          if (location) lines.push(`Location: ${location}`);
+          if (tags) lines.push(`Tags: ${tags}`);
+          if (description) {
+            lines.push("\nDescription:");
+            lines.push(description);
+          }
+
+          output.value = lines.join("\n");
+        };
+
+        document.getElementById("generate-listing").addEventListener("click", generate);
+        document.getElementById("copy-listing").addEventListener("click", () => {
+          generate();
+          output.select();
+          output.setSelectionRange(0, output.value.length);
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(output.value);
+          } else {
+            document.execCommand("copy");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Listing - Mike's List</title>
+    <meta name="description" content="Listing detail on Mike's List." />
+    <link rel="stylesheet" href="/MikesList/assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="/MikesList/index.html">Home</a>
+        <a href="/MikesList/browse.html">Browse</a>
+        <a href="/MikesList/post.html">Post</a>
+        <a href="/MikesList/rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section id="listing-panel">
+        <h1 id="listing-title">Listing</h1>
+        <p id="listing-meta" class="small"></p>
+        <div id="listing-tags" class="tag-chip-list"></div>
+        <div id="listing-description" class="listing-description"></div>
+        <p class="inline-actions">
+          <button type="button" id="open-reply" class="primary">Reply</button>
+          <button type="button" id="open-report">Report</button>
+          <a id="back-link" href="/MikesList/browse.html">Back to results</a>
+        </p>
+        <p class="small">
+          You can also email directly: <a id="mailto-reply" href="mailto:admin@mikeslist.com">Reply by email</a>
+        </p>
+      </section>
+      <section id="listing-missing" class="banner" hidden>
+        Listing not found. Please return to the directory and try another listing.
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Replies and reports are sent to the site administrator.</p>
+    </footer>
+
+    <div class="modal" id="reply-modal" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="reply-title">
+        <button class="modal-close" type="button" data-close="reply-modal">Close</button>
+        <h2 id="reply-title">Reply to listing</h2>
+        <div class="form-row">
+          <label for="reply-email">Your email</label>
+          <input id="reply-email" type="email" />
+        </div>
+        <div class="form-row">
+          <label for="reply-message">Message</label>
+          <textarea id="reply-message"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="copy-reply">Copy message</button>
+          <a id="reply-mailto" href="mailto:admin@mikeslist.com">Open email</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="report-modal" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="report-title">
+        <button class="modal-close" type="button" data-close="report-modal">Close</button>
+        <h2 id="report-title">Report listing</h2>
+        <div class="form-row">
+          <label for="report-reason">Reason</label>
+          <select id="report-reason">
+            <option value="Spam">Spam</option>
+            <option value="Scam">Scam</option>
+            <option value="Harassment">Harassment</option>
+            <option value="Personal info">Personal info</option>
+            <option value="Prohibited">Prohibited</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="report-details">Details</label>
+          <textarea id="report-details"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="copy-report">Copy report</button>
+          <a id="report-mailto" href="mailto:admin@mikeslist.com">Open email</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="/MikesList/assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        const panel = document.getElementById("listing-panel");
+        const missing = document.getElementById("listing-missing");
+        const backLink = document.getElementById("back-link");
+
+        if (document.referrer && document.referrer.includes("/MikesList/")) {
+          backLink.href = document.referrer;
+        }
+
+        if (!id) {
+          panel.hidden = true;
+          missing.hidden = false;
+          return;
+        }
+
+        let listingData = null;
+
+        window.MikesList.loadListings()
+          .then((listings) => {
+            const listing = listings.find((item) => item.id === id);
+            if (!listing) {
+              panel.hidden = true;
+              missing.hidden = false;
+              return;
+            }
+            listingData = listing;
+            document.title = `${listing.title} - Mike's List`;
+            document.getElementById("listing-title").textContent = listing.title;
+            document.getElementById("listing-meta").textContent = `${listing.locationLabel} | ${listing.category} | Updated ${listing.updatedLabel}`;
+
+            const tags = document.getElementById("listing-tags");
+            tags.innerHTML = "";
+            listing.tags.forEach((tag) => {
+              const chip = document.createElement("span");
+              chip.className = "tag-chip";
+              chip.textContent = tag;
+              tags.appendChild(chip);
+            });
+
+            document.getElementById("listing-description").textContent = listing.description;
+            const listingUrl = window.location.href;
+
+            const replySubject = `Reply: ${listing.title} (ID ${listing.id})`;
+            const reportSubject = `Report: ${listing.title} (ID ${listing.id})`;
+            document.getElementById("reply-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nMessage:\n`)}`;
+            document.getElementById("report-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(reportSubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nReason:\n`)}`;
+            document.getElementById("mailto-reply").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nMessage:\n`)}`;
+          })
+          .catch(() => {
+            panel.hidden = true;
+            missing.hidden = false;
+          });
+
+        function openModal(id) {
+          const modal = document.getElementById(id);
+          if (!modal) return;
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+        }
+
+        function closeModal(id) {
+          const modal = document.getElementById(id);
+          if (!modal) return;
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+
+        document.getElementById("open-reply").addEventListener("click", () => openModal("reply-modal"));
+        document.getElementById("open-report").addEventListener("click", () => openModal("report-modal"));
+
+        document.querySelectorAll("[data-close]").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            closeModal(event.target.getAttribute("data-close"));
+          });
+        });
+
+        document.getElementById("copy-reply").addEventListener("click", () => {
+          if (!listingData) return;
+          const email = document.getElementById("reply-email").value.trim();
+          const message = document.getElementById("reply-message").value.trim();
+          const listingUrl = window.location.href;
+          const text = `Listing: ${listingUrl}\nFrom: ${email || "(your email)"}\n\nMessage:\n${message || ""}`;
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+          } else {
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+          }
+        });
+
+        document.getElementById("copy-report").addEventListener("click", () => {
+          if (!listingData) return;
+          const reason = document.getElementById("report-reason").value;
+          const details = document.getElementById("report-details").value.trim();
+          const listingUrl = window.location.href;
+          const text = `Listing: ${listingUrl}\nReason: ${reason}\n\nDetails:\n${details || ""}`;
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+          } else {
+            const temp = document.createElement("textarea");
+            temp.value = text;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

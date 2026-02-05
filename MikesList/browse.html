@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browse - Mike's List</title>
+    <meta name="description" content="Browse Mike's List listings with filters." />
+    <link rel="stylesheet" href="/MikesList/assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="/MikesList/index.html">Home</a>
+        <a href="/MikesList/browse.html">Browse</a>
+        <a href="/MikesList/post.html">Post</a>
+        <a href="/MikesList/rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Browse listings</h1>
+        <p class="small">Filter by category, location, tags, or keywords. Results update instantly.</p>
+      </section>
+
+      <section class="how-it-works">
+        <h2>How it works</h2>
+        <div class="how-steps">
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" fill="none" stroke="currentColor" />
+              <path d="M3 9h18" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Choose a category</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16l-6 7v5l-4 2v-7z" fill="none" stroke="currentColor" />
+            </svg>
+            <span>Filter by location and tags</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" />
+              <path d="M7 8h10M7 12h8M7 16h6" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Open a listing and contact</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="directory-layout">
+        <aside class="filters-panel" id="filters-panel">
+          <div class="panel-header">
+            <h2>Filters</h2>
+            <button id="clear-filters" type="button">Clear filters</button>
+          </div>
+          <div class="form-row">
+            <label for="category-filter">Category</label>
+            <select id="category-filter" name="category">
+              <option value="">Any category</option>
+              <option value="accounting-tax">Accounting &amp; Tax</option>
+              <option value="legal">Legal</option>
+              <option value="compliance-risk">Compliance &amp; Risk</option>
+              <option value="it-security">IT &amp; Security</option>
+              <option value="real-estate-services">Real Estate Services</option>
+              <option value="health-wellness">Health &amp; Wellness</option>
+              <option value="coaching-career">Coaching &amp; Career</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="location-filter">Location</label>
+            <select id="location-filter" name="location">
+              <option value="">Any location</option>
+              <option value="remote">Remote/Online</option>
+              <option value="san-diego-ca">San Diego, CA</option>
+              <option value="austin-tx">Austin, TX</option>
+              <option value="chicago-il">Chicago, IL</option>
+              <option value="new-york-ny">New York, NY</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="search-filter">Search</label>
+            <input id="search-filter" name="q" type="search" placeholder="Try: contract, coaching, SOC 2" />
+          </div>
+
+          <fieldset class="form-row">
+            <legend>Tags</legend>
+            <div id="tag-options"></div>
+          </fieldset>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-header">
+            <h2>Results</h2>
+            <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">
+              Filters
+            </button>
+            <span id="results-count" class="small"></span>
+          </div>
+          <div id="results"></div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Listings here are examples. Use the hosted app to post or reply.</p>
+    </footer>
+    <script src="/MikesList/assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.MikesList.initDirectoryPage({
+          categorySelectId: "category-filter",
+          locationSelectId: "location-filter",
+          searchInputId: "search-filter",
+          tagContainerId: "tag-options",
+          tagSelector: '#tag-options input[type="checkbox"]',
+          resultsContainerId: "results",
+          countId: "results-count",
+          clearButtonId: "clear-filters",
+          filtersToggleButtonId: "filters-toggle",
+          filtersPanelId: "filters-panel",
+          syncUrl: true
+        });
+      });
+    </script>
+  </body>
+</html>

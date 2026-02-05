@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Accounting &amp; Tax — Mike's List</title>
+    <meta name="description" content="Accounting &amp; Tax listings on Mike's List." />
+    <link rel="stylesheet" href="/MikesList/assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="/MikesList/index.html">Home</a>
+        <a href="/MikesList/browse.html">Browse</a>
+        <a href="/MikesList/post.html">Post</a>
+        <a href="/MikesList/rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Accounting &amp; Tax — Mike's List</h1>
+        <p class="small">Filter within this category or jump to another area.</p>
+      </section>
+
+      <div class="directory-layout">
+        <aside class="filters-panel" id="filters-panel">
+          <div class="panel-header">
+            <h2>Filters</h2>
+            <button id="clear-filters" type="button">Clear filters</button>
+          </div>
+          <div class="form-row">
+            <label for="location-filter">Location</label>
+            <select id="location-filter" name="location">
+              <option value="">Any location</option>
+              <option value="remote">Remote/Online</option>
+              <option value="san-diego-ca">San Diego, CA</option>
+              <option value="austin-tx">Austin, TX</option>
+              <option value="chicago-il">Chicago, IL</option>
+              <option value="new-york-ny">New York, NY</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="search-filter">Search</label>
+            <input id="search-filter" name="q" type="search" placeholder="Search Accounting &amp; Tax" />
+          </div>
+
+          <fieldset class="form-row">
+            <legend>Tags</legend>
+            <div id="tag-options"></div>
+          </fieldset>
+
+          <div class="panel-section">
+            <h3>Other categories</h3>
+            <ul class="nav-list">
+              <li><a href='/MikesList/c/legal/index.html'>Legal</a></li>
+              <li><a href='/MikesList/c/compliance-risk/index.html'>Compliance &amp; Risk</a></li>
+              <li><a href='/MikesList/c/it-security/index.html'>IT &amp; Security</a></li>
+              <li><a href='/MikesList/c/real-estate-services/index.html'>Real Estate Services</a></li>
+              <li><a href='/MikesList/c/health-wellness/index.html'>Health &amp; Wellness</a></li>
+              <li><a href='/MikesList/c/coaching-career/index.html'>Coaching &amp; Career</a></li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <h3>Locations</h3>
+            <ul class="nav-list">
+              <li><a href='/MikesList/l/remote/index.html'>Remote/Online</a></li>
+              <li><a href='/MikesList/l/san-diego-ca/index.html'>San Diego, CA</a></li>
+              <li><a href='/MikesList/l/austin-tx/index.html'>Austin, TX</a></li>
+              <li><a href='/MikesList/l/chicago-il/index.html'>Chicago, IL</a></li>
+              <li><a href='/MikesList/l/new-york-ny/index.html'>New York, NY</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-header">
+            <h2>Listings</h2>
+            <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">Filters</button>
+            <span id="results-count" class="small"></span>
+          </div>
+          <div id="results"></div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Listings shown here are examples for navigation.</p>
+    </footer>
+    <script src="/MikesList/assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.MikesList.initDirectoryPage({
+          locationSelectId: "location-filter",
+          searchInputId: "search-filter",
+          tagContainerId: "tag-options",
+          tagSelector: '#tag-options input[type="checkbox"]',
+          resultsContainerId: "results",
+          countId: "results-count",
+          clearButtonId: "clear-filters",
+          filtersToggleButtonId: "filters-toggle",
+          filtersPanelId: "filters-panel",
+          categorySlug: "accounting-tax",
+          syncUrl: true
+        });
+      });
+    </script>
+  </body>
+</html>
