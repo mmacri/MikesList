@@ -9,7 +9,13 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -31,13 +37,13 @@
               <rect x="3" y="5" width="18" height="14" fill="none" stroke="currentColor" />
               <path d="M3 9h18" stroke="currentColor" fill="none" />
             </svg>
-            <span>Choose a category</span>
+            <span>Choose a category or location</span>
           </div>
           <div class="how-step">
             <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 5h16l-6 7v5l-4 2v-7z" fill="none" stroke="currentColor" />
             </svg>
-            <span>Filter by location and tags</span>
+            <span>Filter and search</span>
           </div>
           <div class="how-step">
             <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -86,6 +92,14 @@
             <input id="search-filter" name="q" type="search" placeholder="Try: contract, coaching, SOC 2" />
           </div>
 
+          <div class="form-row">
+            <label for="sort-filter">Sort</label>
+            <select id="sort-filter" name="sort">
+              <option value="newest">Newest</option>
+              <option value="relevant">Most relevant</option>
+            </select>
+          </div>
+
           <fieldset class="form-row">
             <legend>Tags</legend>
             <div id="tag-options"></div>
@@ -100,6 +114,7 @@
             </button>
             <span id="results-count" class="small"></span>
           </div>
+          <p id="results-summary" class="small summary-line"></p>
           <div id="results"></div>
         </section>
       </div>
@@ -114,10 +129,12 @@
           categorySelectId: "category-filter",
           locationSelectId: "location-filter",
           searchInputId: "search-filter",
+          sortSelectId: "sort-filter",
           tagContainerId: "tag-options",
           tagSelector: '#tag-options input[type="checkbox"]',
           resultsContainerId: "results",
           countId: "results-count",
+          summaryId: "results-summary",
           clearButtonId: "clear-filters",
           filtersToggleButtonId: "filters-toggle",
           filtersPanelId: "filters-panel",

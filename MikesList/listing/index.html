@@ -9,7 +9,13 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -29,11 +35,12 @@
           <a id="back-link" href="/MikesList/browse.html">Back to results</a>
         </p>
         <p class="small">
-          You can also email directly: <a id="mailto-reply" href="mailto:admin@mikeslist.com">Reply by email</a>
+          You can also email directly: <a id="mailto-reply" href="mailto:mikeslist@yourdomain.com">Email admin</a>
         </p>
       </section>
       <section id="listing-missing" class="banner" hidden>
-        Listing not found. Please return to the directory and try another listing.
+        <p>Listing not found. Try browsing the directory to find another listing.</p>
+        <p><a href="/MikesList/browse.html">Back to browse</a></p>
       </section>
     </main>
     <footer class="site-footer">
@@ -54,7 +61,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" id="copy-reply">Copy message</button>
-          <a id="reply-mailto" href="mailto:admin@mikeslist.com">Open email</a>
+          <a id="reply-mailto" href="mailto:mikeslist@yourdomain.com">Email admin</a>
         </div>
       </div>
     </div>
@@ -80,7 +87,7 @@
         </div>
         <div class="modal-actions">
           <button type="button" id="copy-report">Copy report</button>
-          <a id="report-mailto" href="mailto:admin@mikeslist.com">Open email</a>
+          <a id="report-mailto" href="mailto:mikeslist@yourdomain.com">Email admin</a>
         </div>
       </div>
     </div>
@@ -96,6 +103,8 @@
 
         if (document.referrer && document.referrer.includes("/MikesList/")) {
           backLink.href = document.referrer;
+        } else {
+          backLink.href = `${window.MikesList.BASE_PATH}/browse.html`;
         }
 
         if (!id) {
@@ -117,7 +126,7 @@
             listingData = listing;
             document.title = `${listing.title} - Mike's List`;
             document.getElementById("listing-title").textContent = listing.title;
-            document.getElementById("listing-meta").textContent = `${listing.locationLabel} | ${listing.category} | Updated ${listing.updatedLabel}`;
+            document.getElementById("listing-meta").textContent = `${listing.locationLabel} • ${listing.category} • Updated ${listing.updatedLabel}`;
 
             const tags = document.getElementById("listing-tags");
             tags.innerHTML = "";
@@ -131,11 +140,14 @@
             document.getElementById("listing-description").textContent = listing.description;
             const listingUrl = window.location.href;
 
-            const replySubject = `Reply: ${listing.title} (ID ${listing.id})`;
-            const reportSubject = `Report: ${listing.title} (ID ${listing.id})`;
-            document.getElementById("reply-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nMessage:\n`)}`;
-            document.getElementById("report-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(reportSubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nReason:\n`)}`;
-            document.getElementById("mailto-reply").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(`Listing: ${listingUrl}\n\nMessage:\n`)}`;
+            const replySubject = `Reply to ${listing.title} (ID ${listing.id})`;
+            const reportSubject = `Report ${listing.title} (ID ${listing.id})`;
+            const replyBody = `Listing: ${listingUrl}\nFrom: (your email)\n\nMessage:\n`;
+            const reportBody = `Listing: ${listingUrl}\nReason: \n\nDetails:\n`;
+
+            document.getElementById("reply-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(replyBody)}`;
+            document.getElementById("report-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(reportSubject)}&body=${encodeURIComponent(reportBody)}`;
+            document.getElementById("mailto-reply").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(replyBody)}`;
           })
           .catch(() => {
             panel.hidden = true;
@@ -181,6 +193,8 @@
             document.execCommand("copy");
             document.body.removeChild(temp);
           }
+          const subject = `Reply to ${listingData.title} (ID ${listingData.id})`;
+          document.getElementById("reply-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
         });
 
         document.getElementById("copy-report").addEventListener("click", () => {
@@ -199,6 +213,8 @@
             document.execCommand("copy");
             document.body.removeChild(temp);
           }
+          const subject = `Report ${listingData.title} (ID ${listingData.id})`;
+          document.getElementById("report-mailto").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`;
         });
       });
     </script>

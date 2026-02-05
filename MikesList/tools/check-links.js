@@ -6,6 +6,23 @@ const baseSegment = path.basename(rootDir);
 const blockedHost = "example" + ".com";
 const issues = [];
 
+const listingsPath = path.join(rootDir, "assets", "listings.json");
+let listingIds = new Set();
+
+try {
+  const listings = JSON.parse(fs.readFileSync(listingsPath, "utf8"));
+  listingIds = new Set(listings.map((item) => item.id));
+} catch (err) {
+  issues.push(`Unable to read listings.json: ${err.message}`);
+}
+
+const requiredListingIds = ["ml-1001", "ml-1002", "ml-1003", "ml-1004", "ml-1005", "ml-1006"];
+requiredListingIds.forEach((id) => {
+  if (!listingIds.has(id)) {
+    issues.push(`Missing required listing id in listings.json: ${id}`);
+  }
+});
+
 function walk(dir, files = []) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -64,6 +81,15 @@ function resolveTarget(filePath, link) {
   return null;
 }
 
+function checkListingLink(link, filePath) {
+  const match = link.match(/listing\/index\.html\?[^#]*\bid=([^&]+)/i);
+  if (!match) return;
+  const id = decodeURIComponent(match[1]);
+  if (!listingIds.has(id)) {
+    issues.push(`${filePath}: listing id not found -> ${id}`);
+  }
+}
+
 const htmlFiles = walk(rootDir);
 
 for (const filePath of htmlFiles) {
@@ -90,6 +116,8 @@ for (const filePath of htmlFiles) {
     if (isExternal(link)) {
       return;
     }
+
+    checkListingLink(link, filePath);
 
     const resolved = resolveTarget(filePath, link);
     if (!resolved) {

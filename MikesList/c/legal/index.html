@@ -9,7 +9,13 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -21,6 +27,32 @@
       <section>
         <h1>Legal — Mike's List</h1>
         <p class="small">Filter within this category or jump to another area.</p>
+      </section>
+
+      <section class="how-it-works">
+        <h2>How to use this page</h2>
+        <div class="how-steps">
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16l-6 7v5l-4 2v-7z" fill="none" stroke="currentColor" />
+            </svg>
+            <span>Filter</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" />
+              <path d="M7 8h10M7 12h8M7 16h6" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Open a listing</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" />
+              <path d="M9 12h6" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Reply or report</span>
+          </div>
+        </div>
       </section>
 
       <div class="directory-layout">
@@ -44,6 +76,14 @@
           <div class="form-row">
             <label for="search-filter">Search</label>
             <input id="search-filter" name="q" type="search" placeholder="Search Legal" />
+          </div>
+
+          <div class="form-row">
+            <label for="sort-filter">Sort</label>
+            <select id="sort-filter" name="sort">
+              <option value="newest">Newest</option>
+              <option value="relevant">Most relevant</option>
+            </select>
           </div>
 
           <fieldset class="form-row">
@@ -81,6 +121,7 @@
             <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">Filters</button>
             <span id="results-count" class="small"></span>
           </div>
+          <p id="results-summary" class="small summary-line"></p>
           <div id="results"></div>
         </section>
       </div>
@@ -94,10 +135,12 @@
         window.MikesList.initDirectoryPage({
           locationSelectId: "location-filter",
           searchInputId: "search-filter",
+          sortSelectId: "sort-filter",
           tagContainerId: "tag-options",
           tagSelector: '#tag-options input[type="checkbox"]',
           resultsContainerId: "results",
           countId: "results-count",
+          summaryId: "results-summary",
           clearButtonId: "clear-filters",
           filtersToggleButtonId: "filters-toggle",
           filtersPanelId: "filters-panel",

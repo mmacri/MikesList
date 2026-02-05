@@ -4,12 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Services in San Diego, CA — Mike's List</title>
-    <meta name="description" content="Services in San Diego, CA on Mike's List." />
+    <meta name="description" content="Listings in San Diego, CA on Mike's List." />
     <link rel="stylesheet" href="/MikesList/assets/styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -20,7 +26,33 @@
     <main>
       <section>
         <h1>Services in San Diego, CA — Mike's List</h1>
-        <p class="small">Browse by category or filter listings in this location.</p>
+        <p class="small">Browse listings in this location or jump to another city.</p>
+      </section>
+
+      <section class="how-it-works">
+        <h2>How to use this page</h2>
+        <div class="how-steps">
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16l-6 7v5l-4 2v-7z" fill="none" stroke="currentColor" />
+            </svg>
+            <span>Filter</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" />
+              <path d="M7 8h10M7 12h8M7 16h6" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Open a listing</span>
+          </div>
+          <div class="how-step">
+            <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" />
+              <path d="M9 12h6" stroke="currentColor" fill="none" />
+            </svg>
+            <span>Reply or report</span>
+          </div>
+        </div>
       </section>
 
       <div class="directory-layout">
@@ -30,8 +62,30 @@
             <button id="clear-filters" type="button">Clear filters</button>
           </div>
           <div class="form-row">
+            <label for="category-filter">Category</label>
+            <select id="category-filter" name="category">
+              <option value="">Any category</option>
+              <option value="accounting-tax">Accounting &amp; Tax</option>
+              <option value="legal">Legal</option>
+              <option value="compliance-risk">Compliance &amp; Risk</option>
+              <option value="it-security">IT &amp; Security</option>
+              <option value="real-estate-services">Real Estate Services</option>
+              <option value="health-wellness">Health &amp; Wellness</option>
+              <option value="coaching-career">Coaching &amp; Career</option>
+            </select>
+          </div>
+
+          <div class="form-row">
             <label for="search-filter">Search</label>
-            <input id="search-filter" name="q" type="search" placeholder="Search San Diego, CA" />
+            <input id="search-filter" name="q" type="search" placeholder="Search listings" />
+          </div>
+
+          <div class="form-row">
+            <label for="sort-filter">Sort</label>
+            <select id="sort-filter" name="sort">
+              <option value="newest">Newest</option>
+              <option value="relevant">Most relevant</option>
+            </select>
           </div>
 
           <fieldset class="form-row">
@@ -40,15 +94,15 @@
           </fieldset>
 
           <div class="panel-section">
-            <h3>Categories</h3>
+            <h3>Categories in San Diego, CA</h3>
             <ul class="nav-list">
               <li><a href='/MikesList/c/accounting-tax/index.html?location=san-diego-ca'>Accounting &amp; Tax</a></li>
-              <li><a href='/MikesList/c/legal/index.html?location=san-diego-ca'>Legal</a></li>
-              <li><a href='/MikesList/c/compliance-risk/index.html?location=san-diego-ca'>Compliance &amp; Risk</a></li>
-              <li><a href='/MikesList/c/it-security/index.html?location=san-diego-ca'>IT &amp; Security</a></li>
-              <li><a href='/MikesList/c/real-estate-services/index.html?location=san-diego-ca'>Real Estate Services</a></li>
-              <li><a href='/MikesList/c/health-wellness/index.html?location=san-diego-ca'>Health &amp; Wellness</a></li>
-              <li><a href='/MikesList/c/coaching-career/index.html?location=san-diego-ca'>Coaching &amp; Career</a></li>
+            <li><a href='/MikesList/c/legal/index.html?location=san-diego-ca'>Legal</a></li>
+            <li><a href='/MikesList/c/compliance-risk/index.html?location=san-diego-ca'>Compliance &amp; Risk</a></li>
+            <li><a href='/MikesList/c/it-security/index.html?location=san-diego-ca'>IT &amp; Security</a></li>
+            <li><a href='/MikesList/c/real-estate-services/index.html?location=san-diego-ca'>Real Estate Services</a></li>
+            <li><a href='/MikesList/c/health-wellness/index.html?location=san-diego-ca'>Health &amp; Wellness</a></li>
+            <li><a href='/MikesList/c/coaching-career/index.html?location=san-diego-ca'>Coaching &amp; Career</a></li>
             </ul>
           </div>
 
@@ -69,6 +123,7 @@
             <button id="filters-toggle" class="filters-toggle" type="button" aria-expanded="false" aria-controls="filters-panel">Filters</button>
             <span id="results-count" class="small"></span>
           </div>
+          <p id="results-summary" class="small summary-line"></p>
           <div id="results"></div>
         </section>
       </div>
@@ -80,11 +135,14 @@
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         window.MikesList.initDirectoryPage({
+          categorySelectId: "category-filter",
           searchInputId: "search-filter",
+          sortSelectId: "sort-filter",
           tagContainerId: "tag-options",
           tagSelector: '#tag-options input[type="checkbox"]',
           resultsContainerId: "results",
           countId: "results-count",
+          summaryId: "results-summary",
           clearButtonId: "clear-filters",
           filtersToggleButtonId: "filters-toggle",
           filtersPanelId: "filters-panel",

@@ -9,7 +9,13 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -20,11 +26,49 @@
     <main>
       <section>
         <h1>Mike's List</h1>
-        <p class="small">A fast, text-forward directory for professional services. Listings are simple and managed by email link.</p>
+        <p class="small">
+          A fast, text-forward directory for professional services. Listings are simple and managed by email link.
+        </p>
         <p class="inline-actions">
           <a href="/MikesList/browse.html">Browse Listings</a>
           <a href="/MikesList/post.html">Post a Listing</a>
         </p>
+      </section>
+
+      <section class="start-here">
+        <h2>Start here</h2>
+        <div class="start-links">
+          <div class="start-card">
+            <div class="how-step">
+              <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" />
+                <path d="M8 12h8" stroke="currentColor" fill="none" />
+              </svg>
+              <a href="/MikesList/browse.html">I need help</a>
+            </div>
+            <p class="small">Browse services by category and location.</p>
+          </div>
+          <div class="start-card">
+            <div class="how-step">
+              <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="4" y="4" width="16" height="16" fill="none" stroke="currentColor" />
+                <path d="M7 12h10" stroke="currentColor" fill="none" />
+              </svg>
+              <a href="/MikesList/post.html">I offer services</a>
+            </div>
+            <p class="small">Prepare your listing and share it.</p>
+          </div>
+          <div class="start-card">
+            <div class="how-step">
+              <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 12h14" stroke="currentColor" fill="none" />
+                <path d="M12 5v14" stroke="currentColor" fill="none" />
+              </svg>
+              <a href="/MikesList/c/accounting-tax/index.html">Just exploring</a>
+            </div>
+            <p class="small">Start with a category and filter down.</p>
+          </div>
+        </div>
       </section>
 
       <section class="how-it-works">
@@ -35,13 +79,13 @@
               <rect x="3" y="5" width="18" height="14" fill="none" stroke="currentColor" />
               <path d="M3 9h18" stroke="currentColor" fill="none" />
             </svg>
-            <span>Choose a category</span>
+            <span>Choose a category or location</span>
           </div>
           <div class="how-step">
             <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 5h16l-6 7v5l-4 2v-7z" fill="none" stroke="currentColor" />
             </svg>
-            <span>Filter by location and tags</span>
+            <span>Filter and search</span>
           </div>
           <div class="how-step">
             <svg class="how-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -78,17 +122,17 @@
       </section>
 
       <section>
-        <h2>Newest examples</h2>
+        <h2>Newest listings</h2>
         <div id="newest-listings"></div>
       </section>
     </main>
     <footer class="site-footer">
-      <p class="small">Listings are examples for navigation. The hosted app handles posting and replies.</p>
+      <p class="small">Listings are examples for navigation. Use the hosted app for publishing and replies.</p>
     </footer>
     <script src="/MikesList/assets/app.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        window.MikesList.renderNewestListings("newest-listings", 3);
+        window.MikesList.renderNewestListings("newest-listings", 5);
       });
     </script>
   </body>

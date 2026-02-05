@@ -37,6 +37,17 @@ main,
   padding: 16px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 .site-header {
   border-bottom: 1px solid var(--border);
   position: sticky;
@@ -45,9 +56,17 @@ main,
   z-index: 10;
 }
 
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .site-title {
   font-size: 28px;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .site-title a {
@@ -55,8 +74,16 @@ main,
   color: #000000;
 }
 
-.site-nav a {
-  margin-right: 12px;
+.site-search input {
+  width: 220px;
+  max-width: 100%;
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 h1,
@@ -77,7 +104,7 @@ section {
 }
 
 .listing-row {
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -90,20 +117,19 @@ section {
   font-weight: bold;
 }
 
-.listing-meta {
-  margin-right: 10px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
 .listing-secondary {
   color: var(--muted);
   font-size: 14px;
   margin-top: 4px;
 }
 
+.listing-snippet {
+  font-size: 14px;
+  margin-top: 6px;
+}
+
 .listing-description {
-  white-space: pre-line;
+  white-space: pre-wrap;
   margin-top: 12px;
 }
 
@@ -167,7 +193,7 @@ button.primary {
 
 .directory-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 24px;
   align-items: start;
 }
@@ -208,6 +234,10 @@ button.primary {
   flex-wrap: wrap;
 }
 
+.summary-line {
+  margin-top: 6px;
+}
+
 .tag-option {
   display: block;
   margin-bottom: 6px;
@@ -227,7 +257,8 @@ button.primary {
   background: #ffffff;
 }
 
-.how-it-works {
+.how-it-works,
+.start-here {
   border: 1px solid var(--border);
   background: var(--highlight);
   padding: 16px;
@@ -251,6 +282,19 @@ button.primary {
   flex: 0 0 auto;
 }
 
+.start-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.start-card {
+  border: 1px solid var(--border);
+  padding: 12px;
+  background: #ffffff;
+}
+
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -270,6 +314,12 @@ button.primary {
 
 .prepare-output {
   margin-top: 12px;
+}
+
+.empty-state {
+  border: 1px solid var(--border);
+  background: var(--highlight);
+  padding: 12px;
 }
 
 .modal {
@@ -325,5 +375,9 @@ button.primary {
 
   .filters-toggle {
     display: inline-block;
+  }
+
+  .site-search input {
+    width: 100%;
   }
 }

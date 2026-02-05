@@ -9,7 +9,13 @@
   </head>
   <body>
     <header class="site-header">
-      <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+      <div class="header-inner">
+        <div class="site-title"><a href="/MikesList/index.html">Mike's List</a></div>
+        <form class="site-search" action="/MikesList/browse.html" method="get">
+          <label class="visually-hidden" for="header-search">Search listings</label>
+          <input id="header-search" name="q" type="search" placeholder="Search listings" />
+        </form>
+      </div>
       <nav class="site-nav">
         <a href="/MikesList/index.html">Home</a>
         <a href="/MikesList/browse.html">Browse</a>
@@ -30,12 +36,22 @@
           <li>Listings expire automatically.</li>
         </ul>
         <p>
-          Report an issue: <a href="mailto:admin@mikeslist.com">admin@mikeslist.com</a>
+          Report an issue: <a id="report-email" href="mailto:mikeslist@yourdomain.com">mikeslist@yourdomain.com</a>
         </p>
       </section>
     </main>
     <footer class="site-footer">
       <p class="small">Thank you for keeping Mike's List useful and safe.</p>
     </footer>
+    <script src="/MikesList/assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const link = document.getElementById("report-email");
+        if (link) {
+          link.href = `mailto:${window.MikesList.ADMIN_EMAIL}`;
+          link.textContent = window.MikesList.ADMIN_EMAIL;
+        }
+      });
+    </script>
   </body>
 </html>
