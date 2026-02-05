@@ -17,7 +17,7 @@ body {
   color: #000000;
   font-family: "Times New Roman", Times, serif;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 a {
@@ -39,6 +39,10 @@ main,
 
 .site-header {
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
 }
 
 .site-title {
@@ -63,7 +67,7 @@ h3 {
 }
 
 section {
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .listing-list {
@@ -89,6 +93,17 @@ section {
   margin-right: 10px;
   color: var(--muted);
   font-size: 14px;
+}
+
+.listing-secondary {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.listing-description {
+  white-space: pre-line;
+  margin-top: 12px;
 }
 
 .banner {
@@ -117,6 +132,7 @@ textarea {
   border: 1px solid var(--border);
   font-family: inherit;
   font-size: 16px;
+  background: #ffffff;
 }
 
 button,
@@ -137,6 +153,65 @@ input[type="submit"] {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.directory-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.filters-panel {
+  border: 1px solid var(--border);
+  background: var(--highlight);
+  padding: 16px;
+}
+
+.panel-section + .panel-section {
+  margin-top: 20px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin-bottom: 6px;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.tag-option {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.tag-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.tag-chip {
+  border: 1px solid var(--border);
+  padding: 2px 6px;
+  font-size: 12px;
+  background: #ffffff;
+}
+
+@media (max-width: 860px) {
+  .directory-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .table {

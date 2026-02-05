@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Accounting &amp; Tax - Mike's List</title>
+    <meta name="description" content="Accounting &amp; Tax listings on Mike's List." />
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="../../index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../../browse.html">Browse</a>
+        <a href="../../post.html">Post</a>
+        <a href="../../rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Accounting &amp; Tax - Mike's List</h1>
+        <p class="small">Filter within this category or jump to another area.</p>
+      </section>
+
+      <div class="directory-layout">
+        <aside class="filters-panel">
+          <div class="panel-section">
+            <h2>Filter this category</h2>
+            <div class="form-row">
+              <label for="location-filter">Location</label>
+              <select id="location-filter" name="location">
+                <option value="">Any location</option>
+                <option value="remote">Remote/Online</option>
+                <option value="san-diego-ca">San Diego, CA</option>
+                <option value="austin-tx">Austin, TX</option>
+                <option value="chicago-il">Chicago, IL</option>
+                <option value="new-york-ny">New York, NY</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="search-filter">Search</label>
+              <input id="search-filter" name="q" type="search" placeholder="Search Accounting &amp; Tax" />
+            </div>
+
+            <fieldset class="form-row">
+              <legend>Tags</legend>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Remote available' />Remote available</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='In-person' />In-person</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Urgent' />Urgent</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Ongoing' />Ongoing</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='One-time' />One-time</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Free consult' />Free consult</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Fixed price' />Fixed price</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Hourly' />Hourly</label>
+            </fieldset>
+          </div>
+
+          <div class="panel-section">
+            <h3>Other categories</h3>
+            <ul class="nav-list">
+          <li><a href='../legal/index.html'>Legal</a></li>
+          <li><a href='../compliance-risk/index.html'>Compliance &amp; Risk</a></li>
+          <li><a href='../it-security/index.html'>IT &amp; Security</a></li>
+          <li><a href='../real-estate-services/index.html'>Real Estate Services</a></li>
+          <li><a href='../health-wellness/index.html'>Health &amp; Wellness</a></li>
+          <li><a href='../coaching-career/index.html'>Coaching &amp; Career</a></li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <h3>Locations</h3>
+            <ul class="nav-list">
+          <li><a href='../../l/remote/index.html'>Remote/Online</a></li>
+          <li><a href='../../l/san-diego-ca/index.html'>San Diego, CA</a></li>
+          <li><a href='../../l/austin-tx/index.html'>Austin, TX</a></li>
+          <li><a href='../../l/chicago-il/index.html'>Chicago, IL</a></li>
+          <li><a href='../../l/new-york-ny/index.html'>New York, NY</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-header">
+            <h2>Listings</h2>
+            <span id="results-count" class="small"></span>
+          </div>
+          <div id="results"></div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Listings shown here are examples for navigation.</p>
+    </footer>
+    <script src="../../assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.MikesList.initDirectoryPage({
+          locationSelectId: "location-filter",
+          searchInputId: "search-filter",
+          tagSelector: 'input[name="tag"]',
+          resultsContainerId: "results",
+          countId: "results-count",
+          categorySlug: "accounting-tax",
+          syncUrl: true
+        });
+      });
+    </script>
+  </body>
+</html>

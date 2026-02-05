@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Listing - Mike's List</title>
+    <meta name="description" content="Listing detail on Mike's List." />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="../index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="../index.html">Home</a>
+        <a href="../browse.html">Browse</a>
+        <a href="../post.html">Post</a>
+        <a href="../rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section id="listing-panel" class="listing-detail">
+        <h1 id="listing-title">Listing</h1>
+        <p id="listing-meta" class="small"></p>
+        <div id="listing-tags" class="tag-chip-list"></div>
+        <div id="listing-description" class="listing-description"></div>
+        <p class="inline-actions">
+          <a id="reply-link" href="mailto:admin@mikeslist.com">Reply</a>
+          <a id="report-link" href="mailto:admin@mikeslist.com">Report</a>
+          <a href="../browse.html">Back to results</a>
+        </p>
+      </section>
+      <section id="listing-missing" class="banner" hidden>
+        Listing not found. Please return to the directory and try another listing.
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Replies and reports are sent to the site administrator.</p>
+    </footer>
+    <script src="../assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        const panel = document.getElementById("listing-panel");
+        const missing = document.getElementById("listing-missing");
+
+        if (!id) {
+          panel.hidden = true;
+          missing.hidden = false;
+          return;
+        }
+
+        window.MikesList.loadListings()
+          .then((listings) => {
+            const listing = listings.find((item) => item.id === id);
+            if (!listing) {
+              panel.hidden = true;
+              missing.hidden = false;
+              return;
+            }
+
+            document.title = `${listing.title} - Mike's List`;
+            document.getElementById("listing-title").textContent = listing.title;
+            document.getElementById("listing-meta").textContent = `${listing.locationLabel} | ${listing.category} | Updated ${listing.updatedLabel}`;
+
+            const tags = document.getElementById("listing-tags");
+            tags.innerHTML = "";
+            listing.tags.forEach((tag) => {
+              const chip = document.createElement("span");
+              chip.className = "tag-chip";
+              chip.textContent = tag;
+              tags.appendChild(chip);
+            });
+
+            const desc = document.getElementById("listing-description");
+            desc.textContent = listing.description;
+
+            const listingUrl = window.location.href;
+            const replySubject = `Reply: ${listing.title} (ID ${listing.id})`;
+            const reportSubject = `Report: ${listing.title} (ID ${listing.id})`;
+            const replyBody = `Listing: ${listingUrl}\n\nMessage:\n`;
+            const reportBody = `Listing: ${listingUrl}\n\nReason:\n`;
+
+            document.getElementById("reply-link").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(replySubject)}&body=${encodeURIComponent(replyBody)}`;
+            document.getElementById("report-link").href = `mailto:${window.MikesList.ADMIN_EMAIL}?subject=${encodeURIComponent(reportSubject)}&body=${encodeURIComponent(reportBody)}`;
+          })
+          .catch(() => {
+            panel.hidden = true;
+            missing.hidden = false;
+          });
+      });
+    </script>
+  </body>
+</html>

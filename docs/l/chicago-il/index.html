@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Services in Chicago, IL - Mike's List</title>
+    <meta name="description" content="Services in Chicago, IL on Mike's List." />
+    <link rel="stylesheet" href="../../assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-title"><a href="../../index.html">Mike's List</a></div>
+      <nav class="site-nav">
+        <a href="../../index.html">Home</a>
+        <a href="../../browse.html">Browse</a>
+        <a href="../../post.html">Post</a>
+        <a href="../../rules.html">Rules</a>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Services in Chicago, IL - Mike's List</h1>
+        <p class="small">Browse by category or filter listings in this location.</p>
+      </section>
+
+      <div class="directory-layout">
+        <aside class="filters-panel">
+          <div class="panel-section">
+            <h2>Filter this location</h2>
+            <div class="form-row">
+              <label for="search-filter">Search</label>
+              <input id="search-filter" name="q" type="search" placeholder="Search Chicago, IL" />
+            </div>
+
+            <fieldset class="form-row">
+              <legend>Tags</legend>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Remote available' />Remote available</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='In-person' />In-person</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Urgent' />Urgent</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Ongoing' />Ongoing</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='One-time' />One-time</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Free consult' />Free consult</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Fixed price' />Fixed price</label>
+              <label class='tag-option'><input type='checkbox' name='tag' value='Hourly' />Hourly</label>
+            </fieldset>
+          </div>
+
+          <div class="panel-section">
+            <h3>Categories</h3>
+            <ul class="nav-list">
+          <li><a href='../../c/accounting-tax/index.html?location=chicago-il'>Accounting &amp; Tax</a></li>
+          <li><a href='../../c/legal/index.html?location=chicago-il'>Legal</a></li>
+          <li><a href='../../c/compliance-risk/index.html?location=chicago-il'>Compliance &amp; Risk</a></li>
+          <li><a href='../../c/it-security/index.html?location=chicago-il'>IT &amp; Security</a></li>
+          <li><a href='../../c/real-estate-services/index.html?location=chicago-il'>Real Estate Services</a></li>
+          <li><a href='../../c/health-wellness/index.html?location=chicago-il'>Health &amp; Wellness</a></li>
+          <li><a href='../../c/coaching-career/index.html?location=chicago-il'>Coaching &amp; Career</a></li>
+            </ul>
+          </div>
+
+          <div class="panel-section">
+            <h3>Other locations</h3>
+            <ul class="nav-list">
+          <li><a href='../remote/index.html'>Remote/Online</a></li>
+          <li><a href='../san-diego-ca/index.html'>San Diego, CA</a></li>
+          <li><a href='../austin-tx/index.html'>Austin, TX</a></li>
+          <li><a href='../new-york-ny/index.html'>New York, NY</a></li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="results-panel">
+          <div class="results-header">
+            <h2>Listings</h2>
+            <span id="results-count" class="small"></span>
+          </div>
+          <div id="results"></div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <p class="small">Listings shown here are examples for navigation.</p>
+    </footer>
+    <script src="../../assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        window.MikesList.initDirectoryPage({
+          searchInputId: "search-filter",
+          tagSelector: 'input[name="tag"]',
+          resultsContainerId: "results",
+          countId: "results-count",
+          locationSlug: "chicago-il",
+          syncUrl: true
+        });
+      });
+    </script>
+  </body>
+</html>
