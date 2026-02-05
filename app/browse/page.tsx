@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { noStore } from "next/cache";
 import { categories, slugify, tags as tagOptions } from "@/lib/config";
-import { buildLocation, locationLabelFromSlug } from "@/lib/location";
+import { buildLocation, locationLabelFromSlug, parseLocationSlug } from "@/lib/location";
 import { searchListings } from "@/lib/listings";
 import { ListingList } from "@/app/_components/ListingList";
 
@@ -20,27 +20,52 @@ export default async function BrowsePage({
   noStore();
   const page = Number(searchParams.page || "1") || 1;
   const categorySlug = typeof searchParams.category === "string" ? searchParams.category : undefined;
-  const locationType = typeof searchParams.location_type === "string" ? searchParams.location_type : "any";
-  const city = typeof searchParams.city === "string" ? searchParams.city : "";
-  const state = typeof searchParams.state === "string" ? searchParams.state : "";
+  const locationTypeParam =
+    typeof searchParams.location_type === "string" ? searchParams.location_type : "any";
+  const cityParam = typeof searchParams.city === "string" ? searchParams.city : "";
+  const stateParam = typeof searchParams.state === "string" ? searchParams.state : "";
+  const locationParam = typeof searchParams.location === "string" ? searchParams.location : "";
   const q = typeof searchParams.q === "string" ? searchParams.q : "";
   const sort = typeof searchParams.sort === "string" ? searchParams.sort : "newest";
   const selectedTags = toArray(searchParams.tags);
 
+  let resolvedLocationType = locationTypeParam;
+  let resolvedCity = cityParam;
+  let resolvedState = stateParam;
+
+  if (locationParam) {
+    if (locationParam === "remote") {
+      resolvedLocationType = "remote";
+      resolvedCity = "";
+      resolvedState = "";
+    } else {
+      const parsed = parseLocationSlug(locationParam);
+      if (parsed) {
+        resolvedLocationType = "city";
+        resolvedCity = parsed.city;
+        resolvedState = parsed.state;
+      }
+    }
+  }
+
   let locationSlug: string | undefined = undefined;
   let activeLocationType: "city" | "remote" | undefined = undefined;
 
-  if (locationType === "remote") {
+  if (resolvedLocationType === "remote") {
     activeLocationType = "remote";
     locationSlug = "remote";
-  } else if (locationType === "city" && city && state) {
-    const location = buildLocation({
-      locationType: "city",
-      city,
-      state
-    });
+  } else if (resolvedLocationType === "city") {
     activeLocationType = "city";
-    locationSlug = location.locationSlug;
+    if (resolvedCity && resolvedState) {
+      const location = buildLocation({
+        locationType: "city",
+        city: resolvedCity,
+        state: resolvedState
+      });
+      locationSlug = location.locationSlug;
+      resolvedCity = location.city ?? resolvedCity;
+      resolvedState = location.state ?? resolvedState;
+    }
   }
 
   const result = await searchListings({
@@ -57,9 +82,11 @@ export default async function BrowsePage({
   const totalPages = Math.max(1, Math.ceil(result.total / result.pageSize));
   const queryBase = new URLSearchParams();
   if (categorySlug) queryBase.set("category", categorySlug);
-  if (locationType) queryBase.set("location_type", locationType);
-  if (city) queryBase.set("city", city);
-  if (state) queryBase.set("state", state);
+  if (resolvedLocationType) queryBase.set("location_type", resolvedLocationType);
+  if (resolvedCity) queryBase.set("city", resolvedCity);
+  if (resolvedState) queryBase.set("state", resolvedState);
+  const locationQuerySlug = locationParam || locationSlug;
+  if (locationQuerySlug) queryBase.set("location", locationQuerySlug);
   if (q) queryBase.set("q", q);
   if (sort) queryBase.set("sort", sort);
   selectedTags.forEach((tag) => queryBase.append("tags", tag));
@@ -91,7 +118,7 @@ export default async function BrowsePage({
 
           <div className="form-row">
             <label htmlFor="location_type">Location type</label>
-            <select id="location_type" name="location_type" defaultValue={locationType}>
+            <select id="location_type" name="location_type" defaultValue={resolvedLocationType}>
               <option value="any">Any</option>
               <option value="city">City</option>
               <option value="remote">Remote/Online</option>
@@ -100,12 +127,12 @@ export default async function BrowsePage({
 
           <div className="form-row">
             <label htmlFor="city">City</label>
-            <input id="city" name="city" type="text" defaultValue={city} />
+            <input id="city" name="city" type="text" defaultValue={resolvedCity} />
           </div>
 
           <div className="form-row">
             <label htmlFor="state">State</label>
-            <input id="state" name="state" type="text" defaultValue={state} />
+            <input id="state" name="state" type="text" defaultValue={resolvedState} />
           </div>
 
           <div className="form-row">

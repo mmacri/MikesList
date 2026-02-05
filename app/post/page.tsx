@@ -1,5 +1,6 @@
 import { noStore } from "next/cache";
 import { categories, slugify, tags as tagOptions } from "@/lib/config";
+import { parseLocationSlug } from "@/lib/location";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,29 @@ export default async function PostPage({
   const pending = searchParams.pending === "1";
   const errorKey = typeof searchParams.error === "string" ? searchParams.error : "";
   const errorMessage = errorMessages[errorKey];
+  const locationSlugParam =
+    typeof searchParams.locationSlug === "string"
+      ? searchParams.locationSlug
+      : typeof searchParams.location === "string"
+        ? searchParams.location
+        : "";
+
+  let locationTypeDefault = "city";
+  let cityDefault = "";
+  let stateDefault = "";
+
+  if (locationSlugParam) {
+    if (locationSlugParam === "remote") {
+      locationTypeDefault = "remote";
+    } else {
+      const parsed = parseLocationSlug(locationSlugParam);
+      if (parsed) {
+        locationTypeDefault = "city";
+        cityDefault = parsed.city;
+        stateDefault = parsed.state;
+      }
+    }
+  }
 
   return (
     <div>
@@ -61,18 +85,18 @@ export default async function PostPage({
         </div>
         <div className="form-row">
           <label htmlFor="location_type">Location type</label>
-          <select id="location_type" name="location_type" required>
+          <select id="location_type" name="location_type" required defaultValue={locationTypeDefault}>
             <option value="city">City</option>
             <option value="remote">Remote/Online</option>
           </select>
         </div>
         <div className="form-row">
           <label htmlFor="city">City (required for city listings)</label>
-          <input id="city" name="city" type="text" />
+          <input id="city" name="city" type="text" defaultValue={cityDefault} />
         </div>
         <div className="form-row">
           <label htmlFor="state">State (required for city listings)</label>
-          <input id="state" name="state" type="text" />
+          <input id="state" name="state" type="text" defaultValue={stateDefault} />
         </div>
         <div className="form-row">
           <label>Tags</label>

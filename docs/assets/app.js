@@ -1,11 +1,11 @@
-const APP_BASE_URL = "https://example.com";
+window.APP_BASE_URL = "https://your-app-domain.com";
 
 function normalizeBase(url) {
   return url.replace(/\/$/, "");
 }
 
 function withBase(path) {
-  return `${normalizeBase(APP_BASE_URL)}${path}`;
+  return `${normalizeBase(window.APP_BASE_URL)}${path}`;
 }
 
 function applyAppLinks() {

@@ -30,7 +30,7 @@ https://mmacri.github.io/MikesList/
 Update the app base URL in `docs/assets/app.js` so all landing-page links point to your live app:
 
 ```js
-const APP_BASE_URL = "https://your-app-domain.com";
+window.APP_BASE_URL = "https://your-app-domain.com";
 ```
 
 If you want sitemap URLs to reflect your GitHub Pages domain, update `docs/sitemap.xml` as well.
