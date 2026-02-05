@@ -27,11 +27,7 @@ CREATE TABLE "Listing" (
     "lastRenewedAt" DATETIME,
     "replyCount" INTEGER NOT NULL DEFAULT 0,
     "lastReminderStage" TEXT,
-    "lastReminderSentAt" DATETIME,
-    CONSTRAINT "Listing_status_check" CHECK ("status" IN ('active', 'expired', 'removed')),
-    CONSTRAINT "Listing_moderationStatus_check" CHECK ("moderationStatus" IN ('approved', 'pending', 'rejected')),
-    CONSTRAINT "Listing_locationType_check" CHECK ("locationType" IN ('city', 'remote')),
-    CONSTRAINT "Listing_lastReminderStage_check" CHECK ("lastReminderStage" IN ('seven_day', 'one_day'))
+    "lastReminderSentAt" DATETIME
 );
 
 -- CreateTable
@@ -44,7 +40,6 @@ CREATE TABLE "Report" (
     "reporterEmail" TEXT,
     "status" TEXT NOT NULL DEFAULT 'open',
     "ipHash" TEXT,
-    CONSTRAINT "Report_status_check" CHECK ("status" IN ('open', 'reviewed', 'dismissed')),
     CONSTRAINT "Report_listingId_fkey" FOREIGN KEY ("listingId") REFERENCES "Listing" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 

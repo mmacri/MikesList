@@ -25,6 +25,16 @@ export function parseTags(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.filter((item) => typeof item === "string") as string[];
   }
+  if (typeof value === "string" && value.trim().length > 0) {
+    try {
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        return parsed.filter((item) => typeof item === "string") as string[];
+      }
+    } catch {
+      // ignore malformed tag payloads
+    }
+  }
   return [];
 }
 

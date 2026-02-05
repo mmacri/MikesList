@@ -9,51 +9,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ListingStatus {
-  active
-  expired
-  removed
-}
-
-enum ModerationStatus {
-  approved
-  pending
-  rejected
-}
-
-enum LocationType {
-  city
-  remote
-}
-
-enum ReportStatus {
-  open
-  reviewed
-  dismissed
-}
-
-enum ReminderStage {
-  seven_day
-  one_day
-}
-
 model Listing {
   id                 String           @id @default(cuid())
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
   expiresAt          DateTime
-  status             ListingStatus    @default(active)
-  moderationStatus   ModerationStatus @default(approved)
+  status             String           @default("active")
+  moderationStatus   String           @default("approved")
   title              String
   slug               String
   category           String
   categorySlug       String
-  locationType       LocationType
+  locationType       String
   city               String?
   state              String?
   locationLabel      String
   locationSlug       String
-  tags               Json
+  tags               String
   priceAmount        Int?
   priceUnit          String?
   description        String
@@ -64,7 +36,7 @@ model Listing {
   lastBumpedAt       DateTime         @default(now())
   lastRenewedAt      DateTime?
   replyCount         Int              @default(0)
-  lastReminderStage  ReminderStage?
+  lastReminderStage  String?
   lastReminderSentAt DateTime?
 
   reports            Report[]
@@ -84,7 +56,7 @@ model Report {
   reason        String
   details       String
   reporterEmail String?
-  status        ReportStatus @default(open)
+  status        String       @default("open")
   ipHash        String?
 
   listing       Listing      @relation(fields: [listingId], references: [id])

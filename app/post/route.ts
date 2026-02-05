@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       state: location.state,
       locationLabel: location.locationLabel,
       locationSlug: location.locationSlug,
-      tags: parsed.data.tags,
+      tags: JSON.stringify(parsed.data.tags),
       priceAmount: parsed.data.priceAmount ?? null,
       priceUnit: parsed.data.priceUnit ?? null,
       description: parsed.data.description,
